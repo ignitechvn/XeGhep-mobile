@@ -1,0 +1,101 @@
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+_$UserModelImpl _$$UserModelImplFromJson(Map<String, dynamic> json) =>
+    _$UserModelImpl(
+      id: json['id'] as String,
+      phoneNumber: json['phoneNumber'] as String,
+      fullName: json['fullName'] as String,
+      email: json['email'] as String,
+      avatar: json['avatar'] as String?,
+      role: $enumDecode(_$UserRoleEnumMap, json['role']),
+      status: $enumDecode(_$UserStatusEnumMap, json['status']),
+      createdAt: DateTime.parse(json['createdAt'] as String),
+      updatedAt: json['updatedAt'] == null
+          ? null
+          : DateTime.parse(json['updatedAt'] as String),
+      lastLoginAt: json['lastLoginAt'] == null
+          ? null
+          : DateTime.parse(json['lastLoginAt'] as String),
+    );
+
+Map<String, dynamic> _$$UserModelImplToJson(_$UserModelImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'phoneNumber': instance.phoneNumber,
+      'fullName': instance.fullName,
+      'email': instance.email,
+      'avatar': instance.avatar,
+      'role': _$UserRoleEnumMap[instance.role]!,
+      'status': _$UserStatusEnumMap[instance.status]!,
+      'createdAt': instance.createdAt.toIso8601String(),
+      'updatedAt': instance.updatedAt?.toIso8601String(),
+      'lastLoginAt': instance.lastLoginAt?.toIso8601String(),
+    };
+
+const _$UserRoleEnumMap = {
+  UserRole.driver: 'DRIVER',
+  UserRole.admin: 'ADMIN',
+  UserRole.customer: 'CUSTOMER',
+};
+
+const _$UserStatusEnumMap = {
+  UserStatus.active: 'ACTIVE',
+  UserStatus.inactive: 'INACTIVE',
+  UserStatus.suspended: 'SUSPENDED',
+  UserStatus.pendingVerification: 'PENDING_VERIFICATION',
+};
+
+_$DriverModelImpl _$$DriverModelImplFromJson(Map<String, dynamic> json) =>
+    _$DriverModelImpl(
+      id: json['id'] as String,
+      userId: json['userId'] as String,
+      licenseNumber: json['licenseNumber'] as String,
+      vehicleType: json['vehicleType'] as String,
+      vehiclePlate: json['vehiclePlate'] as String,
+      vehicleModel: json['vehicleModel'] as String,
+      vehicleColor: json['vehicleColor'] as String,
+      currentScore: (json['currentScore'] as num).toInt(),
+      totalShared: (json['totalShared'] as num).toInt(),
+      totalReceived: (json['totalReceived'] as num).toInt(),
+      status: $enumDecode(_$DriverStatusEnumMap, json['status']),
+      isOnline: json['isOnline'] as bool,
+      favoriteRoutes: (json['favoriteRoutes'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      lastActiveAt: json['lastActiveAt'] == null
+          ? null
+          : DateTime.parse(json['lastActiveAt'] as String),
+      createdAt: DateTime.parse(json['createdAt'] as String),
+      updatedAt: json['updatedAt'] == null
+          ? null
+          : DateTime.parse(json['updatedAt'] as String),
+    );
+
+Map<String, dynamic> _$$DriverModelImplToJson(_$DriverModelImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'userId': instance.userId,
+      'licenseNumber': instance.licenseNumber,
+      'vehicleType': instance.vehicleType,
+      'vehiclePlate': instance.vehiclePlate,
+      'vehicleModel': instance.vehicleModel,
+      'vehicleColor': instance.vehicleColor,
+      'currentScore': instance.currentScore,
+      'totalShared': instance.totalShared,
+      'totalReceived': instance.totalReceived,
+      'status': _$DriverStatusEnumMap[instance.status]!,
+      'isOnline': instance.isOnline,
+      'favoriteRoutes': instance.favoriteRoutes,
+      'lastActiveAt': instance.lastActiveAt?.toIso8601String(),
+      'createdAt': instance.createdAt.toIso8601String(),
+      'updatedAt': instance.updatedAt?.toIso8601String(),
+    };
+
+const _$DriverStatusEnumMap = {
+  DriverStatus.available: 'AVAILABLE',
+  DriverStatus.busy: 'BUSY',
+  DriverStatus.offline: 'OFFLINE',
+  DriverStatus.suspended: 'SUSPENDED',
+};

@@ -1,0 +1,51 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'notification_model.dart';
+
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+_$NotificationModelImpl _$$NotificationModelImplFromJson(
+        Map<String, dynamic> json) =>
+    _$NotificationModelImpl(
+      id: json['id'] as String,
+      title: json['title'] as String,
+      body: json['body'] as String,
+      type: $enumDecode(_$NotificationTypeEnumMap, json['type']),
+      driverId: json['driverId'] as String,
+      customerId: json['customerId'] as String?,
+      rideId: json['rideId'] as String?,
+      data: json['data'] as Map<String, dynamic>?,
+      isRead: json['isRead'] as bool,
+      createdAt: DateTime.parse(json['createdAt'] as String),
+      readAt: json['readAt'] == null
+          ? null
+          : DateTime.parse(json['readAt'] as String),
+    );
+
+Map<String, dynamic> _$$NotificationModelImplToJson(
+        _$NotificationModelImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'title': instance.title,
+      'body': instance.body,
+      'type': _$NotificationTypeEnumMap[instance.type]!,
+      'driverId': instance.driverId,
+      'customerId': instance.customerId,
+      'rideId': instance.rideId,
+      'data': instance.data,
+      'isRead': instance.isRead,
+      'createdAt': instance.createdAt.toIso8601String(),
+      'readAt': instance.readAt?.toIso8601String(),
+    };
+
+const _$NotificationTypeEnumMap = {
+  NotificationType.newCustomer: 'NEW_CUSTOMER',
+  NotificationType.rideAssigned: 'RIDE_ASSIGNED',
+  NotificationType.rideReminder: 'RIDE_REMINDER',
+  NotificationType.scoreUpdate: 'SCORE_UPDATE',
+  NotificationType.systemAlert: 'SYSTEM_ALERT',
+  NotificationType.penaltyWarning: 'PENALTY_WARNING',
+  NotificationType.bonusEarned: 'BONUS_EARNED',
+};

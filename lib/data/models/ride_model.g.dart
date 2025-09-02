@@ -1,0 +1,81 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'ride_model.dart';
+
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+_$RideModelImpl _$$RideModelImplFromJson(Map<String, dynamic> json) =>
+    _$RideModelImpl(
+      id: json['id'] as String,
+      customerId: json['customerId'] as String,
+      driverId: json['driverId'] as String,
+      pickupLocation: json['pickupLocation'] as String,
+      dropoffLocation: json['dropoffLocation'] as String,
+      pickupTime: DateTime.parse(json['pickupTime'] as String),
+      scheduledTime: DateTime.parse(json['scheduledTime'] as String),
+      status: $enumDecode(_$RideStatusEnumMap, json['status']),
+      seatCount: (json['seatCount'] as num).toInt(),
+      notes: json['notes'] as String?,
+      cancellationReason: json['cancellationReason'] as String?,
+      startedAt: json['startedAt'] == null
+          ? null
+          : DateTime.parse(json['startedAt'] as String),
+      completedAt: json['completedAt'] == null
+          ? null
+          : DateTime.parse(json['completedAt'] as String),
+      cancelledAt: json['cancelledAt'] == null
+          ? null
+          : DateTime.parse(json['cancelledAt'] as String),
+      rating: json['rating'] == null
+          ? null
+          : RideRating.fromJson(json['rating'] as Map<String, dynamic>),
+      createdAt: DateTime.parse(json['createdAt'] as String),
+      updatedAt: json['updatedAt'] == null
+          ? null
+          : DateTime.parse(json['updatedAt'] as String),
+    );
+
+Map<String, dynamic> _$$RideModelImplToJson(_$RideModelImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'customerId': instance.customerId,
+      'driverId': instance.driverId,
+      'pickupLocation': instance.pickupLocation,
+      'dropoffLocation': instance.dropoffLocation,
+      'pickupTime': instance.pickupTime.toIso8601String(),
+      'scheduledTime': instance.scheduledTime.toIso8601String(),
+      'status': _$RideStatusEnumMap[instance.status]!,
+      'seatCount': instance.seatCount,
+      'notes': instance.notes,
+      'cancellationReason': instance.cancellationReason,
+      'startedAt': instance.startedAt?.toIso8601String(),
+      'completedAt': instance.completedAt?.toIso8601String(),
+      'cancelledAt': instance.cancelledAt?.toIso8601String(),
+      'rating': instance.rating,
+      'createdAt': instance.createdAt.toIso8601String(),
+      'updatedAt': instance.updatedAt?.toIso8601String(),
+    };
+
+const _$RideStatusEnumMap = {
+  RideStatus.pending: 'PENDING',
+  RideStatus.assigned: 'ASSIGNED',
+  RideStatus.inProgress: 'IN_PROGRESS',
+  RideStatus.completed: 'COMPLETED',
+  RideStatus.cancelled: 'CANCELLED',
+};
+
+_$RideRatingImpl _$$RideRatingImplFromJson(Map<String, dynamic> json) =>
+    _$RideRatingImpl(
+      rating: (json['rating'] as num).toInt(),
+      comment: json['comment'] as String?,
+      ratedAt: DateTime.parse(json['ratedAt'] as String),
+    );
+
+Map<String, dynamic> _$$RideRatingImplToJson(_$RideRatingImpl instance) =>
+    <String, dynamic>{
+      'rating': instance.rating,
+      'comment': instance.comment,
+      'ratedAt': instance.ratedAt.toIso8601String(),
+    };
