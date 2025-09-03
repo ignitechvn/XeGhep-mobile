@@ -13,7 +13,7 @@ import '../../features/auth/presentation/pages/register_page.dart';
 import '../../features/auth/presentation/pages/register_otp_page.dart';
 import '../../features/auth/presentation/pages/register_kyc_page.dart';
 import '../../features/auth/presentation/pages/register_success_page.dart';
-import '../../features/home/presentation/pages/home_page.dart';
+import '../../features/settings/presentation/pages/settings_page.dart';
 import '../../features/marketplace/presentation/pages/marketplace_page.dart';
 import '../../features/marketplace/presentation/pages/post_customer_page.dart';
 import '../../features/rides/presentation/pages/rides_page.dart';
@@ -25,7 +25,7 @@ import '../../shared/widgets/main_navigation.dart';
 
 final appRouterProvider = Provider<GoRouter>((ref) {
   return GoRouter(
-    initialLocation: '/home',
+    initialLocation: '/marketplace',
     routes: [
       // Auth Routes
       GoRoute(
@@ -137,9 +137,9 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         builder: (context, state, child) => MainNavigation(child: child),
         routes: [
           GoRoute(
-            path: '/home',
-            name: 'home',
-            builder: (context, state) => const HomePage(),
+            path: '/settings',
+            name: 'settings',
+            builder: (context, state) => const SettingsPage(),
           ),
           GoRoute(
             path: '/marketplace',
@@ -203,7 +203,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             ),
             const SizedBox(height: 24),
             ElevatedButton(
-              onPressed: () => context.go('/home'),
+              onPressed: () => context.go('/marketplace'),
               child: const Text('Về trang chủ'),
             ),
           ],

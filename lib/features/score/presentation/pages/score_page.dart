@@ -48,6 +48,11 @@ class _ScorePageState extends ConsumerState<ScorePage> with TickerProviderStateM
         ],
         bottom: TabBar(
           controller: _tabController,
+          labelColor: Colors.white,
+          unselectedLabelColor: Colors.white70,
+          indicatorColor: Colors.white,
+          indicatorWeight: 3,
+          dividerColor: Colors.transparent,
           tabs: const [
             Tab(text: 'Tổng quan'),
             Tab(text: 'Lịch sử'),
@@ -84,7 +89,7 @@ class _ScorePageState extends ConsumerState<ScorePage> with TickerProviderStateM
               error: (error, stack) => ScoreHeaderCardError(error: error),
             ),
             
-            const SizedBox(height: 24),
+            const SizedBox(height: 16),
             
             // Score Stats Grid
             scoreStatsAsync.when(
@@ -93,12 +98,12 @@ class _ScorePageState extends ConsumerState<ScorePage> with TickerProviderStateM
               error: (error, stack) => ScoreStatsGridError(error: error),
             ),
             
-            const SizedBox(height: 24),
+            const SizedBox(height: 16),
             
             // Score Rules Card
             ScoreRulesCard(),
             
-            const SizedBox(height: 24),
+            const SizedBox(height: 16),
             
             // Quota Information
             scoreStatsAsync.when(
@@ -161,13 +166,30 @@ class _ScorePageState extends ConsumerState<ScorePage> with TickerProviderStateM
   Widget _buildFilterChip(BuildContext context, String label, String value, String currentFilter) {
     final isSelected = currentFilter == value;
     return FilterChip(
-      label: Text(label),
+      label: Text(
+        label,
+        style: TextStyle(
+          color: isSelected ? Colors.white : Theme.of(context).primaryColor,
+          fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
+          fontSize: 14,
+        ),
+      ),
       selected: isSelected,
       onSelected: (selected) {
         ref.read(scoreHistoryFilterProvider.notifier).state = value;
       },
-      selectedColor: Theme.of(context).primaryColor.withOpacity(0.2),
-      checkmarkColor: Theme.of(context).primaryColor,
+      selectedColor: Theme.of(context).primaryColor,
+      backgroundColor: Colors.white,
+      checkmarkColor: Colors.white,
+      side: BorderSide(
+        color: Theme.of(context).primaryColor,
+        width: 1.5,
+      ),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
+      elevation: isSelected ? 2 : 0,
+      pressElevation: 1,
     );
   }
 

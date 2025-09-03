@@ -44,6 +44,11 @@ class _RidesPageState extends ConsumerState<RidesPage> with TickerProviderStateM
         bottom: TabBar(
           controller: _tabController,
           isScrollable: true,
+          labelColor: Colors.white,
+          unselectedLabelColor: Colors.white70,
+          indicatorColor: Colors.white,
+          indicatorWeight: 3,
+          dividerColor: Colors.transparent,
           onTap: (index) {
             setState(() {
               _selectedStatus = _getStatusFromIndex(index);

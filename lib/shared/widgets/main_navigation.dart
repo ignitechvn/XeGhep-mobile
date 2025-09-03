@@ -19,17 +19,12 @@ class MainNavigation extends StatelessWidget {
         onTap: (index) => _onTap(context, index),
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            activeIcon: Icon(Icons.home),
-            label: 'Trang chủ',
-          ),
-          BottomNavigationBarItem(
             icon: Icon(Icons.store_outlined),
             activeIcon: Icon(Icons.store),
             label: 'Sàn',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.add_circle_outline),
+            icon: Icon(Icons.add_circle_outlined),
             activeIcon: Icon(Icons.add_circle),
             label: 'Đăng khách',
           ),
@@ -43,6 +38,11 @@ class MainNavigation extends StatelessWidget {
             activeIcon: Icon(Icons.star),
             label: 'Điểm',
           ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings_outlined),
+            activeIcon: Icon(Icons.settings),
+            label: 'Cài đặt',
+          ),
         ],
       ),
     );
@@ -52,15 +52,15 @@ class MainNavigation extends StatelessWidget {
     final location = GoRouterState.of(context).uri.path;
     
     switch (location) {
-      case '/home':
-        return 0;
       case '/marketplace':
-        return 1;
+        return 0;
       case '/post-customer':
-        return 2;
+        return 1;
       case '/rides':
-        return 3;
+        return 2;
       case '/score':
+        return 3;
+      case '/settings':
         return 4;
       default:
         return 0;
@@ -70,19 +70,19 @@ class MainNavigation extends StatelessWidget {
   void _onTap(BuildContext context, int index) {
     switch (index) {
       case 0:
-        context.go('/home');
-        break;
-      case 1:
         context.go('/marketplace');
         break;
-      case 2:
+      case 1:
         context.go('/post-customer');
         break;
-      case 3:
+      case 2:
         context.go('/rides');
         break;
-      case 4:
+      case 3:
         context.go('/score');
+        break;
+      case 4:
+        context.go('/settings');
         break;
     }
   }

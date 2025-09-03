@@ -18,51 +18,15 @@ class _NotificationsPageState extends ConsumerState<NotificationsPage> {
       appBar: AppBar(
         title: const Text('Thông báo'),
         actions: [
-          PopupMenuButton<String>(
-            onSelected: (value) {
-              setState(() {
-                _selectedFilter = value;
-              });
-            },
-            itemBuilder: (context) => _filters.map((filter) {
-              return PopupMenuItem<String>(
-                value: filter,
-                child: Row(
-                  children: [
-                    if (_selectedFilter == filter)
-                      Icon(
-                        Icons.check,
-                        color: Theme.of(context).primaryColor,
-                        size: 20,
-                      )
-                    else
-                      const SizedBox(width: 20),
-                    const SizedBox(width: 8),
-                    Text(filter),
-                  ],
-                ),
-              );
-            }).toList(),
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey[300]!),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    _selectedFilter,
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                  const SizedBox(width: 4),
-                  const Icon(Icons.keyboard_arrow_down, size: 16),
-                ],
-              ),
+          // Filter button với icon
+          IconButton(
+            icon: const Icon(
+              Icons.filter_list,
+              color: Colors.white,
             ),
+            onPressed: _showFilterDialog,
+            tooltip: 'Lọc thông báo',
           ),
-          const SizedBox(width: 8),
           IconButton(
             icon: const Icon(Icons.done_all),
             onPressed: _markAllAsRead,
@@ -225,145 +189,114 @@ class _NotificationsPageState extends ConsumerState<NotificationsPage> {
           ),
         ],
       ),
-      child: InkWell(
-        onTap: () => _markAsRead(notification.id),
-        borderRadius: BorderRadius.circular(12),
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Icon
-              Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: notification.iconColor.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Icon(
-                  notification.icon,
-                  color: notification.iconColor,
-                  size: 20,
-                ),
-              ),
-              
-              const SizedBox(width: 12),
-              
-              // Content
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            notification.title,
-                            style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                              fontWeight: notification.isRead ? FontWeight.w500 : FontWeight.w600,
-                              color: notification.isRead ? Colors.grey[700] : Colors.black,
-                            ),
-                          ),
-                        ),
-                        if (!notification.isRead)
-                          Container(
-                            width: 8,
-                            height: 8,
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).primaryColor,
-                              shape: BoxShape.circle,
-                            ),
-                          ),
-                      ],
+      child: Dismissible(
+        key: Key(notification.id),
+        direction: DismissDirection.endToStart,
+        background: Container(
+          alignment: Alignment.centerRight,
+          padding: const EdgeInsets.only(right: 20),
+          decoration: BoxDecoration(
+            color: Colors.red,
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: const Icon(
+            Icons.delete,
+            color: Colors.white,
+            size: 24,
+          ),
+        ),
+        confirmDismiss: (direction) async {
+          return await showDialog<bool>(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: const Text('Xác nhận xóa'),
+                content: const Text('Bạn có chắc chắn muốn xóa thông báo này?'),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pop(false),
+                    child: const Text('Hủy'),
+                  ),
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pop(true),
+                    style: TextButton.styleFrom(
+                      foregroundColor: Colors.red,
                     ),
-                    const SizedBox(height: 4),
-                    Text(
-                      notification.message,
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Colors.grey[600],
+                    child: const Text('Xóa'),
+                  ),
+                ],
+              );
+            },
+          );
+        },
+        onDismissed: (direction) {
+          _deleteNotification(notification.id);
+        },
+        child: InkWell(
+          onTap: () => _markAsRead(notification.id),
+          borderRadius: BorderRadius.circular(12),
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        notification.title,
+                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                          fontWeight: notification.isRead ? FontWeight.w500 : FontWeight.w600,
+                          color: notification.isRead ? Colors.grey[700] : Colors.black,
+                        ),
                       ),
                     ),
-                    const SizedBox(height: 8),
-                    Row(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                          decoration: BoxDecoration(
-                            color: _getTypeColor(notification.type).withOpacity(0.1),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Text(
-                            notification.type,
-                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              color: _getTypeColor(notification.type),
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
+                    if (!notification.isRead)
+                      Container(
+                        width: 8,
+                        height: 8,
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).primaryColor,
+                          shape: BoxShape.circle,
                         ),
-                        const SizedBox(width: 8),
-                        Text(
-                          _formatTime(notification.time),
-                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: Colors.grey[500],
-                          ),
+                      ),
+                  ],
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  notification.message,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: Colors.grey[600],
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                      decoration: BoxDecoration(
+                        color: _getTypeColor(notification.type).withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Text(
+                        notification.type,
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: _getTypeColor(notification.type),
+                          fontWeight: FontWeight.w500,
                         ),
-                      ],
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      _formatTime(notification.time),
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: Colors.grey[500],
+                      ),
                     ),
                   ],
                 ),
-              ),
-              
-              // Actions
-              PopupMenuButton<String>(
-                onSelected: (value) {
-                  if (value == 'delete') {
-                    _deleteNotification(notification.id);
-                  } else if (value == 'mark_read') {
-                    _markAsRead(notification.id);
-                  }
-                },
-                itemBuilder: (context) => [
-                  PopupMenuItem<String>(
-                    value: 'mark_read',
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.mark_email_read,
-                          size: 16,
-                          color: Colors.grey[600],
-                        ),
-                        const SizedBox(width: 8),
-                        Text(
-                          notification.isRead ? 'Đánh dấu chưa đọc' : 'Đánh dấu đã đọc',
-                        ),
-                      ],
-                    ),
-                  ),
-                  PopupMenuItem<String>(
-                    value: 'delete',
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.delete,
-                          size: 16,
-                          color: Colors.red[600],
-                        ),
-                        const SizedBox(width: 8),
-                        Text(
-                          'Xóa',
-                          style: TextStyle(color: Colors.red[600]),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-                child: Icon(
-                  Icons.more_vert,
-                  color: Colors.grey[400],
-                  size: 20,
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -425,6 +358,59 @@ class _NotificationsPageState extends ConsumerState<NotificationsPage> {
     });
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('Đã xóa thông báo')),
+    );
+  }
+
+  void _showFilterDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text(
+            'Lọc thông báo',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          content: SizedBox(
+            width: double.maxFinite,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: _filters.map((filter) {
+                return RadioListTile<String>(
+                  title: Text(
+                    filter,
+                    style: const TextStyle(fontSize: 16),
+                  ),
+                  value: filter,
+                  groupValue: _selectedFilter,
+                  onChanged: (String? value) {
+                    if (value != null) {
+                      setState(() {
+                        _selectedFilter = value;
+                      });
+                      Navigator.of(context).pop();
+                    }
+                  },
+                  activeColor: Theme.of(context).primaryColor,
+                );
+              }).toList(),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text(
+                'Hủy',
+                style: TextStyle(fontSize: 16),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }
