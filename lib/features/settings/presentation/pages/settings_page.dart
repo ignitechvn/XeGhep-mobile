@@ -5,6 +5,7 @@ import 'package:xe_ghep_app/features/score/presentation/providers/score_provider
 import 'package:xe_ghep_app/features/score/presentation/widgets/score_stats_grid.dart';
 import 'package:xe_ghep_app/features/score/presentation/widgets/score_history_list.dart';
 import 'package:xe_ghep_app/features/score/presentation/widgets/score_rules_card.dart';
+import 'package:xe_ghep_app/features/support/presentation/pages/support_page.dart';
 
 class SettingsPage extends ConsumerStatefulWidget {
   const SettingsPage({super.key});
@@ -275,9 +276,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
           'Hỗ trợ',
           'Liên hệ, FAQ, báo lỗi',
           Icons.help,
-          () {
-            // TODO: Navigate to support
-          },
+          () => _navigateToSupport(context),
         ),
         
         const SizedBox(height: 12),
@@ -367,6 +366,14 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => const RecentActivityPage(),
+      ),
+    );
+  }
+
+  void _navigateToSupport(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const SupportPage(),
       ),
     );
   }
