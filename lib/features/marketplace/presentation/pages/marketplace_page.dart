@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:xe_ghep_app/features/marketplace/domain/entities/customer_post.dart';
 import 'package:xe_ghep_app/features/marketplace/presentation/pages/customer_post_detail_page.dart';
 import 'package:xe_ghep_app/features/marketplace/presentation/providers/marketplace_provider.dart';
 import 'package:xe_ghep_app/features/marketplace/presentation/widgets/customer_post_card.dart';
@@ -177,7 +178,7 @@ class _MarketplacePageState extends ConsumerState<MarketplacePage> {
         itemBuilder: (context, index) {
           return CustomerPostCard(
             post: posts[index],
-            onClaim: () => _handleClaimCustomer(posts[index].id),
+            onClaim: () => _handleClaimCustomer(posts[index]),
             onViewDetails: () => _handleViewDetails(posts[index].id),
           );
         },
@@ -259,21 +260,69 @@ class _MarketplacePageState extends ConsumerState<MarketplacePage> {
     );
   }
 
-  void _handleClaimCustomer(String postId) {
+  void _handleClaimCustomer(CustomerPost post) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Xác nhận nhận khách'),
-        content: const Text('Bạn có chắc chắn muốn nhận chuyến đi này? Điểm score sẽ bị trừ 1.'),
+        content: SizedBox(
+          width: double.maxFinite,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Thông tin chuyến đi
+              _buildInfoRow('Tuyến đường:', '${post.fromLocation.shortAddress} → ${post.toLocation.shortAddress}'),
+              const SizedBox(height: 8),
+              _buildInfoRow('Thời gian:', _formatTime(post.departureTime)),
+              const SizedBox(height: 8),
+              _buildInfoRow('Số ghế:', '${post.seatsNeeded} ghế'),
+              const SizedBox(height: 8),
+              _buildInfoRow('Giá tiền:', '${post.price.toStringAsFixed(0)} VNĐ'),
+              if (post.description != null && post.description!.isNotEmpty) ...[
+                const SizedBox(height: 8),
+                _buildInfoRow('Ghi chú:', post.description!),
+              ],
+              const SizedBox(height: 16),
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Colors.orange.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: Colors.orange.withOpacity(0.3)),
+                ),
+                child: Row(
+                  children: [
+                    Icon(Icons.info, color: Colors.orange, size: 20),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        'Điểm score sẽ bị trừ 1 khi nhận chuyến đi này.',
+                        style: TextStyle(
+                          color: Colors.orange[700],
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
+            style: TextButton.styleFrom(
+              foregroundColor: Colors.black,
+            ),
             child: const Text('Hủy'),
           ),
           ElevatedButton(
             onPressed: () async {
               Navigator.of(context).pop();
-              await ref.read(claimCustomerProvider.notifier).claimCustomer(postId);
+              await ref.read(claimCustomerProvider.notifier).claimCustomer(post.id);
               ref.invalidate(availablePostsProvider);
               if (mounted) {
                 ScaffoldMessenger.of(context).showSnackBar(
@@ -286,6 +335,36 @@ class _MarketplacePageState extends ConsumerState<MarketplacePage> {
         ],
       ),
     );
+  }
+
+  Widget _buildInfoRow(String label, String value) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          width: 80,
+          child: Text(
+            label,
+            style: const TextStyle(
+              fontWeight: FontWeight.w600,
+              fontSize: 14,
+            ),
+          ),
+        ),
+        Expanded(
+          child: Text(
+            value,
+            style: const TextStyle(
+              fontSize: 14,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  String _formatTime(DateTime time) {
+    return '${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')} - ${time.day}/${time.month}/${time.year}';
   }
 
   void _handleViewDetails(String postId) {

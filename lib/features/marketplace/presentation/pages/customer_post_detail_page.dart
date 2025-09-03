@@ -526,7 +526,7 @@ class _CustomerPostDetailPageState extends ConsumerState<CustomerPostDetailPage>
               ),
               const SizedBox(width: 8),
               Text(
-                'Thông tin tài xế',
+                'Thông tin người chia sẻ',
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
