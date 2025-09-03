@@ -5,7 +5,7 @@ import 'package:xe_ghep_app/features/marketplace/domain/entities/post_customer_r
 import 'package:xe_ghep_app/features/marketplace/presentation/pages/my_post_detail_page.dart';
 import 'package:xe_ghep_app/features/marketplace/presentation/providers/marketplace_provider.dart';
 import 'package:xe_ghep_app/features/marketplace/presentation/widgets/my_post_card.dart';
-import 'package:xe_ghep_app/features/marketplace/presentation/widgets/post_customer_form.dart';
+import 'package:xe_ghep_app/features/marketplace/presentation/pages/post_customer_page_new.dart';
 
 class PostCustomerPage extends ConsumerStatefulWidget {
   const PostCustomerPage({super.key});
@@ -221,10 +221,10 @@ class _PostCustomerPageState extends ConsumerState<PostCustomerPage> {
   }
 
   void _showPostCustomerForm(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      builder: (context) => const PostCustomerForm(),
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const PostCustomerPageNew(),
+      ),
     );
   }
 

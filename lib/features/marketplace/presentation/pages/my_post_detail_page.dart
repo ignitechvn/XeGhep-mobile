@@ -190,14 +190,14 @@ class _MyPostDetailPageState extends ConsumerState<MyPostDetailPage> {
               'Điểm đón',
               widget.post.fromLocation,
               Icons.my_location,
-              Colors.green,
+              null,
             ),
             const SizedBox(height: 16),
             _buildLocationItem(
               'Điểm đến',
               widget.post.toLocation,
               Icons.location_on,
-              Colors.red,
+              null,
             ),
           ],
         ),
@@ -205,19 +205,19 @@ class _MyPostDetailPageState extends ConsumerState<MyPostDetailPage> {
     );
   }
 
-  Widget _buildLocationItem(String title, location, IconData icon, Color color) {
+  Widget _buildLocationItem(String title, location, IconData icon, Color? color) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           children: [
-            Icon(icon, color: color, size: 20),
+            Icon(icon, color: color ?? Colors.grey[600], size: 20),
             const SizedBox(width: 8),
             Text(
               title,
               style: Theme.of(context).textTheme.titleSmall?.copyWith(
                 fontWeight: FontWeight.w600,
-                color: color,
+                color: color ?? Colors.grey[800],
               ),
             ),
           ],
@@ -227,9 +227,9 @@ class _MyPostDetailPageState extends ConsumerState<MyPostDetailPage> {
           width: double.infinity,
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: color.withOpacity(0.1),
+            color: Colors.grey[50],
             borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: color.withOpacity(0.3)),
+            border: Border.all(color: Colors.grey[300]!),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
