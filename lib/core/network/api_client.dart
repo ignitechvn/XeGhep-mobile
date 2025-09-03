@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:retrofit/retrofit.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../app/constants/app_constants.dart';
@@ -9,87 +9,153 @@ import '../../data/models/ride_model.dart';
 import '../../data/models/score_model.dart';
 import '../../data/models/notification_model.dart';
 
-part 'api_client.g.dart';
+class ApiClient {
+  final Dio _dio;
+  final String baseUrl;
 
-@RestApi(baseUrl: AppConstants.baseUrl)
-abstract class ApiClient {
-  factory ApiClient(Dio dio, {String baseUrl}) = _ApiClient;
+  ApiClient(this._dio, {String? baseUrl}) : baseUrl = baseUrl ?? AppConstants.baseUrl;
 
   // Auth endpoints
-  @POST('/auth/send-otp')
-  Future<Map<String, dynamic>> sendOtp(@Body() Map<String, dynamic> data);
+  Future<Response<Map<String, dynamic>>> sendOtp(Map<String, dynamic> data) async {
+    return await _dio.post('/auth/send-otp', data: data);
+  }
 
-  @POST('/auth/verify-otp')
-  Future<Map<String, dynamic>> verifyOtp(@Body() Map<String, dynamic> data);
+  Future<Response<Map<String, dynamic>>> verifyOtp(Map<String, dynamic> data) async {
+    return await _dio.post('/auth/verify-otp', data: data);
+  }
 
-  @POST('/auth/refresh-token')
-  Future<Map<String, dynamic>> refreshToken(@Body() Map<String, dynamic> data);
+  Future<Response<Map<String, dynamic>>> refreshToken(Map<String, dynamic> data) async {
+    return await _dio.post('/auth/refresh-token', data: data);
+  }
 
-  @POST('/auth/logout')
-  Future<void> logout();
+  Future<void> logout() async {
+    await _dio.post('/auth/logout');
+  }
 
   // User endpoints
-  @GET('/user/profile')
-  Future<UserModel> getProfile();
+  Future<UserModel> getProfile() async {
+    final response = await _dio.get('/user/profile');
+    return UserModel.fromJson(response.data);
+  }
 
-  @PUT('/user/profile')
-  Future<UserModel> updateProfile(@Body() Map<String, dynamic> data);
+  Future<UserModel> updateProfile(Map<String, dynamic> data) async {
+    final response = await _dio.put('/user/profile', data: data);
+    return UserModel.fromJson(response.data);
+  }
 
-  @POST('/user/kyc')
-  Future<DriverModel> submitKyc(@Body() Map<String, dynamic> data);
+  Future<DriverModel> submitKyc(Map<String, dynamic> data) async {
+    final response = await _dio.post('/user/kyc', data: data);
+    return DriverModel.fromJson(response.data);
+  }
 
   // Driver endpoints
-  @GET('/driver/status')
-  Future<DriverModel> getDriverStatus();
+  Future<DriverModel> getDriverStatus() async {
+    final response = await _dio.get('/driver/status');
+    return DriverModel.fromJson(response.data);
+  }
 
-  @PUT('/driver/status')
-  Future<DriverModel> updateDriverStatus(@Body() Map<String, dynamic> data);
+  Future<DriverModel> updateDriverStatus(Map<String, dynamic> data) async {
+    final response = await _dio.put('/driver/status', data: data);
+    return DriverModel.fromJson(response.data);
+  }
 
-  @GET('/driver/score')
-  Future<ScoreModel> getDriverScore();
+  Future<ScoreModel> getDriverScore() async {
+    final response = await _dio.get('/driver/score');
+    return ScoreModel.fromJson(response.data);
+  }
 
   // Customer endpoints
-  @GET('/customers')
-  Future<List<CustomerModel>> getCustomers(@Queries() Map<String, dynamic> queries);
+  Future<List<CustomerModel>> getCustomers(Map<String, dynamic> queries) async {
+    final response = await _dio.get('/customers', queryParameters: queries);
+    return (response.data as List)
+        .map((item) => CustomerModel.fromJson(item))
+        .toList();
+  }
 
-  @POST('/customers')
-  Future<CustomerModel> postCustomer(@Body() CustomerPostModel customer);
+  Future<CustomerModel> postCustomer(Map<String, dynamic> customer) async {
+    final response = await _dio.post('/customers', data: customer);
+    return CustomerModel.fromJson(response.data);
+  }
 
-  @GET('/customers/{id}')
-  Future<CustomerModel> getCustomer(@Path('id') String id);
+  Future<CustomerModel> getCustomer(String id) async {
+    final response = await _dio.get('/customers/$id');
+    return CustomerModel.fromJson(response.data);
+  }
 
-  @PUT('/customers/{id}/claim')
-  Future<CustomerModel> claimCustomer(@Path('id') String id);
+  Future<CustomerModel> claimCustomer(String id) async {
+    final response = await _dio.put('/customers/$id/claim');
+    return CustomerModel.fromJson(response.data);
+  }
 
-  @PUT('/customers/{id}/cancel')
-  Future<CustomerModel> cancelCustomer(@Path('id') String id, @Body() Map<String, dynamic> data);
+  Future<CustomerModel> cancelCustomer(String id, Map<String, dynamic> data) async {
+    final response = await _dio.put('/customers/$id/cancel', data: data);
+    return CustomerModel.fromJson(response.data);
+  }
 
   // Ride endpoints
-  @GET('/rides')
-  Future<List<RideModel>> getRides(@Queries() Map<String, dynamic> queries);
+  Future<List<RideModel>> getRides(Map<String, dynamic> queries) async {
+    final response = await _dio.get('/rides', queryParameters: queries);
+    return (response.data as List)
+        .map((item) => RideModel.fromJson(item))
+        .toList();
+  }
 
-  @GET('/rides/{id}')
-  Future<RideModel> getRide(@Path('id') String id);
+  Future<RideModel> getRide(String id) async {
+    final response = await _dio.get('/rides/$id');
+    return RideModel.fromJson(response.data);
+  }
 
-  @PUT('/rides/{id}/start')
-  Future<RideModel> startRide(@Path('id') String id);
+  Future<RideModel> startRide(String id) async {
+    final response = await _dio.put('/rides/$id/start');
+    return RideModel.fromJson(response.data);
+  }
 
-  @PUT('/rides/{id}/complete')
-  Future<RideModel> completeRide(@Path('id') String id, @Body() Map<String, dynamic> data);
+  Future<RideModel> completeRide(String id, Map<String, dynamic> data) async {
+    final response = await _dio.put('/rides/$id/complete', data: data);
+    return RideModel.fromJson(response.data);
+  }
 
-  @PUT('/rides/{id}/cancel')
-  Future<RideModel> cancelRide(@Path('id') String id, @Body() Map<String, dynamic> data);
+  Future<RideModel> cancelRide(String id, Map<String, dynamic> data) async {
+    final response = await _dio.put('/rides/$id/cancel', data: data);
+    return RideModel.fromJson(response.data);
+  }
 
   // Notification endpoints
-  @GET('/notifications')
-  Future<List<NotificationModel>> getNotifications(@Queries() Map<String, dynamic> queries);
+  Future<List<NotificationModel>> getNotifications(Map<String, dynamic> queries) async {
+    final response = await _dio.get('/notifications', queryParameters: queries);
+    return (response.data as List)
+        .map((item) => NotificationModel.fromJson(item))
+        .toList();
+  }
 
-  @PUT('/notifications/{id}/read')
-  Future<NotificationModel> markNotificationAsRead(@Path('id') String id);
+  Future<NotificationModel> markNotificationAsRead(String id) async {
+    final response = await _dio.put('/notifications/$id/read');
+    return NotificationModel.fromJson(response.data);
+  }
 
-  @PUT('/notifications/read-all')
-  Future<void> markAllNotificationsAsRead();
+  Future<void> markAllNotificationsAsRead() async {
+    await _dio.put('/notifications/read-all');
+  }
+
+  // Generic HTTP methods for marketplace
+  Future<Response<Map<String, dynamic>>> get(String path, {Map<String, dynamic>? queryParameters}) async {
+    return await _dio.get(path, queryParameters: queryParameters);
+  }
+
+  Future<Response<Map<String, dynamic>>> post(String path, {dynamic data}) async {
+    return await _dio.post(path, data: data);
+  }
+
+  Future<Response<Map<String, dynamic>>> put(String path, {dynamic data}) async {
+    return await _dio.put(path, data: data);
+  }
+
+  Future<Response<Map<String, dynamic>>> delete(String path) async {
+    return await _dio.delete(path);
+  }
 }
+
+
 
 class ApiClientFactory {
   static ApiClient create() {

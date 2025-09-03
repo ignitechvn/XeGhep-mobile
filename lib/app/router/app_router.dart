@@ -5,18 +5,27 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../features/auth/presentation/pages/login_page.dart';
 import '../../features/auth/presentation/pages/otp_verification_page.dart';
 import '../../features/auth/presentation/pages/kyc_page.dart';
+import '../../features/auth/presentation/pages/forgot_password_page.dart';
+import '../../features/auth/presentation/pages/forgot_password_otp_page.dart';
+import '../../features/auth/presentation/pages/reset_password_page.dart';
+import '../../features/auth/presentation/pages/reset_password_success_page.dart';
+import '../../features/auth/presentation/pages/register_page.dart';
+import '../../features/auth/presentation/pages/register_otp_page.dart';
+import '../../features/auth/presentation/pages/register_kyc_page.dart';
+import '../../features/auth/presentation/pages/register_success_page.dart';
 import '../../features/home/presentation/pages/home_page.dart';
 import '../../features/marketplace/presentation/pages/marketplace_page.dart';
-import '../../features/post_customer/presentation/pages/post_customer_page.dart';
+import '../../features/marketplace/presentation/pages/post_customer_page.dart';
 import '../../features/rides/presentation/pages/rides_page.dart';
 import '../../features/score/presentation/pages/score_page.dart';
 import '../../features/profile/presentation/pages/profile_page.dart';
 import '../../features/support/presentation/pages/support_page.dart';
+import '../../features/notifications/presentation/pages/notifications_page.dart';
 import '../../shared/widgets/main_navigation.dart';
 
 final appRouterProvider = Provider<GoRouter>((ref) {
   return GoRouter(
-    initialLocation: '/login',
+    initialLocation: '/home',
     routes: [
       // Auth Routes
       GoRoute(
@@ -36,6 +45,91 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         path: '/kyc',
         name: 'kyc',
         builder: (context, state) => const KycPage(),
+      ),
+      
+      // Forgot Password Flow
+      GoRoute(
+        path: '/forgot-password',
+        name: 'forgot-password',
+        builder: (context, state) => const ForgotPasswordPage(),
+      ),
+      GoRoute(
+        path: '/forgot-password-otp',
+        name: 'forgot-password-otp',
+        builder: (context, state) {
+          final extra = state.extra as Map<String, dynamic>? ?? {};
+          return ForgotPasswordOtpPage(
+            phoneNumber: extra['phoneNumber'] ?? '',
+            type: extra['type'] ?? 'forgot_password',
+          );
+        },
+      ),
+      GoRoute(
+        path: '/reset-password',
+        name: 'reset-password',
+        builder: (context, state) {
+          final extra = state.extra as Map<String, dynamic>? ?? {};
+          return ResetPasswordPage(
+            phoneNumber: extra['phoneNumber'] ?? '',
+            otp: extra['otp'] ?? '',
+          );
+        },
+      ),
+      GoRoute(
+        path: '/reset-password-success',
+        name: 'reset-password-success',
+        builder: (context, state) {
+          final extra = state.extra as Map<String, dynamic>? ?? {};
+          return ResetPasswordSuccessPage(
+            phoneNumber: extra['phoneNumber'] ?? '',
+          );
+        },
+      ),
+      
+      // Register Flow
+      GoRoute(
+        path: '/register',
+        name: 'register',
+        builder: (context, state) => const RegisterPage(),
+      ),
+      GoRoute(
+        path: '/register-otp',
+        name: 'register-otp',
+        builder: (context, state) {
+          final extra = state.extra as Map<String, dynamic>? ?? {};
+          return RegisterOtpPage(
+            phoneNumber: extra['phoneNumber'] ?? '',
+            password: extra['password'] ?? '',
+            fullName: extra['fullName'] ?? '',
+            email: extra['email'] ?? '',
+            type: extra['type'] ?? 'register',
+          );
+        },
+      ),
+      GoRoute(
+        path: '/register-kyc',
+        name: 'register-kyc',
+        builder: (context, state) {
+          final extra = state.extra as Map<String, dynamic>? ?? {};
+          return RegisterKycPage(
+            phoneNumber: extra['phoneNumber'] ?? '',
+            password: extra['password'] ?? '',
+            fullName: extra['fullName'] ?? '',
+            email: extra['email'] ?? '',
+            otp: extra['otp'] ?? '',
+          );
+        },
+      ),
+      GoRoute(
+        path: '/register-success',
+        name: 'register-success',
+        builder: (context, state) {
+          final extra = state.extra as Map<String, dynamic>? ?? {};
+          return RegisterSuccessPage(
+            phoneNumber: extra['phoneNumber'] ?? '',
+            fullName: extra['fullName'] ?? '',
+          );
+        },
       ),
       
       // Main App Routes with Bottom Navigation
@@ -80,6 +174,11 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         path: '/support',
         name: 'support',
         builder: (context, state) => const SupportPage(),
+      ),
+      GoRoute(
+        path: '/notifications',
+        name: 'notifications',
+        builder: (context, state) => const NotificationsPage(),
       ),
     ],
     errorBuilder: (context, state) => Scaffold(

@@ -26,6 +26,12 @@
       "languageVersion": "2.17"
     },
     {
+      "name": "archive",
+      "rootUri": "file:///Users/levanvu/.pub-cache/hosted/pub.dev/archive-4.0.7",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "args",
       "rootUri": "file:///Users/levanvu/.pub-cache/hosted/pub.dev/args-2.7.0",
       "packageUri": "lib/",
@@ -122,6 +128,12 @@
       "languageVersion": "3.8"
     },
     {
+      "name": "cli_util",
+      "rootUri": "file:///Users/levanvu/.pub-cache/hosted/pub.dev/cli_util-0.4.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.4"
+    },
+    {
       "name": "clock",
       "rootUri": "file:///Users/levanvu/.pub-cache/hosted/pub.dev/clock-1.1.2",
       "packageUri": "lib/",
@@ -180,18 +192,6 @@
       "rootUri": "file:///Users/levanvu/.pub-cache/hosted/pub.dev/dart_style-2.3.2",
       "packageUri": "lib/",
       "languageVersion": "2.19"
-    },
-    {
-      "name": "dartx",
-      "rootUri": "file:///Users/levanvu/.pub-cache/hosted/pub.dev/dartx-1.2.0",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
-      "name": "dbus",
-      "rootUri": "file:///Users/levanvu/.pub-cache/hosted/pub.dev/dbus-0.7.11",
-      "packageUri": "lib/",
-      "languageVersion": "2.17"
     },
     {
       "name": "device_info_plus",
@@ -320,28 +320,16 @@
       "languageVersion": "3.8"
     },
     {
+      "name": "flutter_launcher_icons",
+      "rootUri": "file:///Users/levanvu/.pub-cache/hosted/pub.dev/flutter_launcher_icons-0.13.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
       "name": "flutter_lints",
       "rootUri": "file:///Users/levanvu/.pub-cache/hosted/pub.dev/flutter_lints-3.0.2",
       "packageUri": "lib/",
       "languageVersion": "3.1"
-    },
-    {
-      "name": "flutter_local_notifications",
-      "rootUri": "file:///Users/levanvu/.pub-cache/hosted/pub.dev/flutter_local_notifications-16.3.3",
-      "packageUri": "lib/",
-      "languageVersion": "2.17"
-    },
-    {
-      "name": "flutter_local_notifications_linux",
-      "rootUri": "file:///Users/levanvu/.pub-cache/hosted/pub.dev/flutter_local_notifications_linux-4.0.1",
-      "packageUri": "lib/",
-      "languageVersion": "2.17"
-    },
-    {
-      "name": "flutter_local_notifications_platform_interface",
-      "rootUri": "file:///Users/levanvu/.pub-cache/hosted/pub.dev/flutter_local_notifications_platform_interface-7.2.0",
-      "packageUri": "lib/",
-      "languageVersion": "2.17"
     },
     {
       "name": "flutter_plugin_android_lifecycle",
@@ -548,6 +536,12 @@
       "languageVersion": "3.4"
     },
     {
+      "name": "image",
+      "rootUri": "file:///Users/levanvu/.pub-cache/hosted/pub.dev/image-4.5.4",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "image_picker",
       "rootUri": "file:///Users/levanvu/.pub-cache/hosted/pub.dev/image_picker-1.1.2",
       "packageUri": "lib/",
@@ -612,24 +606,6 @@
       "rootUri": "file:///Users/levanvu/.pub-cache/hosted/pub.dev/io-1.0.5",
       "packageUri": "lib/",
       "languageVersion": "3.4"
-    },
-    {
-      "name": "isar",
-      "rootUri": "file:///Users/levanvu/.pub-cache/hosted/pub.dev/isar-3.1.0+1",
-      "packageUri": "lib/",
-      "languageVersion": "2.17"
-    },
-    {
-      "name": "isar_flutter_libs",
-      "rootUri": "file:///Users/levanvu/.pub-cache/hosted/pub.dev/isar_flutter_libs-3.1.0+1",
-      "packageUri": "lib/",
-      "languageVersion": "2.17"
-    },
-    {
-      "name": "isar_generator",
-      "rootUri": "file:///Users/levanvu/.pub-cache/hosted/pub.dev/isar_generator-3.1.0+1",
-      "packageUri": "lib/",
-      "languageVersion": "2.17"
     },
     {
       "name": "js",
@@ -884,6 +860,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "posix",
+      "rootUri": "file:///Users/levanvu/.pub-cache/hosted/pub.dev/posix-6.0.3",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "process",
       "rootUri": "file:///Users/levanvu/.pub-cache/hosted/pub.dev/process-5.0.5",
       "packageUri": "lib/",
@@ -1130,18 +1112,6 @@
       "languageVersion": "3.5"
     },
     {
-      "name": "time",
-      "rootUri": "file:///Users/levanvu/.pub-cache/hosted/pub.dev/time-2.1.5",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
-      "name": "timezone",
-      "rootUri": "file:///Users/levanvu/.pub-cache/hosted/pub.dev/timezone-0.9.4",
-      "packageUri": "lib/",
-      "languageVersion": "2.19"
-    },
-    {
       "name": "timing",
       "rootUri": "file:///Users/levanvu/.pub-cache/hosted/pub.dev/timing-1.0.2",
       "packageUri": "lib/",
@@ -1290,12 +1260,6 @@
       "rootUri": "file:///Users/levanvu/.pub-cache/hosted/pub.dev/xml-6.6.1",
       "packageUri": "lib/",
       "languageVersion": "3.8"
-    },
-    {
-      "name": "xxh3",
-      "rootUri": "file:///Users/levanvu/.pub-cache/hosted/pub.dev/xxh3-1.2.0",
-      "packageUri": "lib/",
-      "languageVersion": "2.16"
     },
     {
       "name": "yaml",

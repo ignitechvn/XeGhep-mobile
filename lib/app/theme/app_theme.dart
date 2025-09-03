@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 class AppTheme {
-  // Color Palette
-  static const Color primaryColor = Color(0xFF2196F3);
-  static const Color primaryVariant = Color(0xFF1976D2);
-  static const Color secondaryColor = Color(0xFF4CAF50);
-  static const Color errorColor = Color(0xFFE53935);
-  static const Color warningColor = Color(0xFFFF9800);
-  static const Color successColor = Color(0xFF4CAF50);
+  // Color Palette - Blue Theme
+  static const Color primaryColor = Color(0xFF0092B1);
+  static const Color primaryVariant = Color(0xFF007A96);
+  static const Color secondaryColor = Color(0xFF4FC3F7);
+  static const Color errorColor = Color(0xFFE57373);
+  static const Color warningColor = Color(0xFFFFB74D);
+  static const Color successColor = Color(0xFF81C784);
   
   // Neutral Colors
   static const Color surfaceColor = Color(0xFFFFFFFF);
@@ -20,16 +20,16 @@ class AppTheme {
   static const Color textSecondary = Color(0xFF757575);
   static const Color textHint = Color(0xFFBDBDBD);
   
-  // Status Colors
-  static const Color pendingColor = Color(0xFFFF9800);
-  static const Color activeColor = Color(0xFF4CAF50);
-  static const Color completedColor = Color(0xFF2196F3);
-  static const Color cancelledColor = Color(0xFFE53935);
+  // Status Colors - Blue Theme
+  static const Color pendingColor = Color(0xFFFFB74D);
+  static const Color activeColor = Color(0xFF81C784);
+  static const Color completedColor = Color(0xFF0092B1);
+  static const Color cancelledColor = Color(0xFFE57373);
   
-  // Score Colors
-  static const Color positiveScore = Color(0xFF4CAF50);
-  static const Color negativeScore = Color(0xFFE53935);
-  static const Color neutralScore = Color(0xFF757575);
+  // Score Colors - Blue Theme
+  static const Color positiveScore = Color(0xFF81C784);
+  static const Color negativeScore = Color(0xFFE57373);
+  static const Color neutralScore = Color(0xFF90A4AE);
 
   static ThemeData get lightTheme {
     return ThemeData(
@@ -44,6 +44,7 @@ class AppTheme {
         onSecondary: Colors.white,
         onError: Colors.white,
         onSurface: onSurfaceColor,
+        onSurfaceVariant: textHint,
       ),
       appBarTheme: const AppBarTheme(
         elevation: 0,
@@ -104,6 +105,7 @@ class AppTheme {
           borderSide: const BorderSide(color: errorColor),
         ),
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        hintStyle: const TextStyle(color: textHint),
       ),
       cardTheme: const CardThemeData(
         elevation: 2,
@@ -116,7 +118,7 @@ class AppTheme {
         backgroundColor: surfaceColor,
         elevation: 8,
       ),
-      fontFamily: 'Inter',
+
     );
   }
 
@@ -128,7 +130,7 @@ class AppTheme {
         primaryContainer: primaryVariant,
         secondary: secondaryColor,
         error: errorColor,
-        surface: Color(0xFF1E1E1E),
+        surface: Color(0xFF1A1A1A),
         onPrimary: Colors.white,
         onSecondary: Colors.white,
         onError: Colors.white,
@@ -137,7 +139,7 @@ class AppTheme {
       appBarTheme: const AppBarTheme(
         elevation: 0,
         centerTitle: true,
-        backgroundColor: Color(0xFF1E1E1E),
+        backgroundColor: Color(0xFF1A1A1A),
         foregroundColor: Colors.white,
         titleTextStyle: TextStyle(
           fontSize: 18,
@@ -159,16 +161,16 @@ class AppTheme {
       cardTheme: const CardThemeData(
         elevation: 2,
         margin: EdgeInsets.all(8),
-        color: Color(0xFF2C2C2C),
+        color: Color(0xFF2A2A2A),
       ),
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
         type: BottomNavigationBarType.fixed,
         selectedItemColor: primaryColor,
-        unselectedItemColor: Color(0xFF757575),
-        backgroundColor: Color(0xFF1E1E1E),
+        unselectedItemColor: Color(0xFF90A4AE),
+        backgroundColor: Color(0xFF1A1A1A),
         elevation: 8,
       ),
-      fontFamily: 'Inter',
+
     );
   }
 }

@@ -65,9 +65,9 @@ class MarketplaceRepository {
   }
 
   // Post a new customer
-  Future<CustomerModel> postCustomer(CustomerPostModel customer) async {
+  Future<CustomerModel> postCustomer(Map<String, dynamic> customerData) async {
     try {
-      final postedCustomer = await _apiClient.postCustomer(customer);
+      final postedCustomer = await _apiClient.postCustomer(customerData);
       
       // Refresh the marketplace list
       await getCustomers();

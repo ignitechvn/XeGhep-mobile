@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../shared/widgets/custom_text_field.dart';
 import '../../../../shared/widgets/loading_button.dart';
+import '../../../../shared/widgets/app_logo.dart';
 import '../providers/auth_provider.dart';
 
 class KycPage extends ConsumerStatefulWidget {
@@ -76,19 +77,7 @@ class _KycPageState extends ConsumerState<KycPage> {
                 // Header
                 Column(
                   children: [
-                    Container(
-                      width: 80,
-                      height: 80,
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(40),
-                      ),
-                      child: Icon(
-                        Icons.verified_user,
-                        size: 40,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
+                    const AppLogoMedium(),
                     const SizedBox(height: 24),
                     Text(
                       'Hoàn thiện hồ sơ',

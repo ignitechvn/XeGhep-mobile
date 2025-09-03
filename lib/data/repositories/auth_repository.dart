@@ -37,7 +37,7 @@ class AuthRepository {
       final response = await _apiClient.sendOtp({
         'phone_number': phoneNumber,
       });
-      return response;
+      return response.data!;
     } catch (e) {
       throw Exception('Không thể gửi mã OTP: $e');
     }
@@ -51,15 +51,17 @@ class AuthRepository {
         'otp': otp,
       });
 
+      final data = response.data!;
+      
       // Save tokens
-      if (response['access_token'] != null) {
-        await _localStorage.saveAuthToken(response['access_token']);
+      if (data['access_token'] != null) {
+        await _localStorage.saveAuthToken(data['access_token']);
       }
-      if (response['refresh_token'] != null) {
-        await _localStorage.saveRefreshToken(response['refresh_token']);
+      if (data['refresh_token'] != null) {
+        await _localStorage.saveRefreshToken(data['refresh_token']);
       }
 
-      return response;
+      return data;
     } catch (e) {
       throw Exception('Mã OTP không hợp lệ: $e');
     }
@@ -130,11 +132,13 @@ class AuthRepository {
         'refresh_token': refreshToken,
       });
 
-      if (response['access_token'] != null) {
-        await _localStorage.saveAuthToken(response['access_token']);
+      final data = response.data!;
+      
+      if (data['access_token'] != null) {
+        await _localStorage.saveAuthToken(data['access_token']);
       }
-      if (response['refresh_token'] != null) {
-        await _localStorage.saveRefreshToken(response['refresh_token']);
+      if (data['refresh_token'] != null) {
+        await _localStorage.saveRefreshToken(data['refresh_token']);
       }
     } catch (e) {
       await _localStorage.clearAuth();

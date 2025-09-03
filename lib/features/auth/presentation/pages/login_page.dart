@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../shared/widgets/custom_text_field.dart';
 import '../../../../shared/widgets/loading_button.dart';
+import '../../../../shared/widgets/app_logo.dart';
 import '../providers/auth_provider.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
@@ -16,11 +17,14 @@ class LoginPage extends ConsumerStatefulWidget {
 class _LoginPageState extends ConsumerState<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final _phoneController = TextEditingController();
+  final _passwordController = TextEditingController();
+  bool _obscurePassword = true;
   bool _isLoading = false;
 
   @override
   void dispose() {
     _phoneController.dispose();
+    _passwordController.dispose();
     super.dispose();
   }
 
@@ -62,36 +66,13 @@ class _LoginPageState extends ConsumerState<LoginPage> {
               children: [
                 const Spacer(),
                 
-                // Logo and Title
+                // Logo only
                 Column(
                   children: [
-                    Container(
-                      width: 120,
-                      height: 120,
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor,
-                        borderRadius: BorderRadius.circular(60),
-                      ),
-                      child: const Icon(
-                        Icons.directions_car,
-                        size: 60,
-                        color: Colors.white,
-                      ),
-                    ),
-                    const SizedBox(height: 24),
-                    Text(
-                      'XeGhep',
-                      style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      'Chia sẻ khách hàng xe ghép',
-                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        color: Colors.grey[600],
-                      ),
+                    const AppLogo(
+                      width: 150,
+                      height: 150,
+                      borderRadius: 30,
                     ),
                   ],
                 ),
@@ -116,6 +97,55 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                   },
                 ),
                 
+                const SizedBox(height: 16),
+                
+                // Password Input
+                CustomTextField(
+                  controller: _passwordController,
+                  label: 'Mật khẩu',
+                  hint: 'Nhập mật khẩu của bạn',
+                  obscureText: _obscurePassword,
+                  prefixIcon: Icons.lock_outlined,
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      _obscurePassword ? Icons.visibility_off : Icons.visibility,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _obscurePassword = !_obscurePassword;
+                      });
+                    },
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Vui lòng nhập mật khẩu';
+                    }
+                    if (value.length < 6) {
+                      return 'Mật khẩu phải có ít nhất 6 ký tự';
+                    }
+                    return null;
+                  },
+                ),
+                
+                const SizedBox(height: 16),
+                
+                // Forgot Password Link
+                Align(
+                  alignment: Alignment.centerRight,
+                                      child: TextButton(
+                      onPressed: () {
+                        context.push('/forgot-password');
+                      },
+                    child: Text(
+                      'Quên mật khẩu?',
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: Theme.of(context).primaryColor,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                ),
+                
                 const SizedBox(height: 24),
                 
                 // Login Button
@@ -126,6 +156,39 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 ),
                 
                 const SizedBox(height: 24),
+                
+                // Register Link
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Chưa có tài khoản?',
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: Colors.grey[600],
+                      ),
+                    ),
+                    const SizedBox(width: 4),
+                    TextButton(
+                      onPressed: () {
+                        context.push('/register');
+                      },
+                      style: TextButton.styleFrom(
+                        padding: EdgeInsets.zero,
+                        minimumSize: Size.zero,
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      ),
+                      child: Text(
+                        'Đăng ký ngay',
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: Theme.of(context).primaryColor,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                
+                const SizedBox(height: 16),
                 
                 // Terms and Privacy
                 Text(
@@ -148,7 +211,22 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   void _handleLogin() {
     if (_formKey.currentState!.validate()) {
       final phoneNumber = _phoneController.text.trim();
-      ref.read(authProvider.notifier).sendOtp(phoneNumber);
+      final password = _passwordController.text.trim();
+      
+      setState(() {
+        _isLoading = true;
+      });
+      
+      // TODO: Implement actual login with phone + password
+      // For now, simulate successful login and go to home
+      Future.delayed(const Duration(seconds: 1), () {
+        setState(() {
+          _isLoading = false;
+        });
+        
+        // Navigate to home page
+        context.go('/home');
+      });
     }
   }
 }

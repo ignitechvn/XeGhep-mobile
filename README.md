@@ -1,10 +1,10 @@
-# XeGhep Mobile App
+# Xe Ghép Mobile App
 
 Ứng dụng mobile cho nền tảng chia sẻ khách hàng xe ghép (4-7 chỗ) tại Việt Nam.
 
 ## 📱 Giới thiệu
 
-XeGhep là nền tảng kết nối tài xế xe ghép với khách hàng, giúp tối ưu hóa hiệu suất vận chuyển và giảm thiểu việc bỏ khách thông qua cơ chế chia sẻ khách hàng.
+Xe Ghép là nền tảng kết nối tài xế xe ghép với khách hàng, giúp tối ưu hóa hiệu suất vận chuyển và giảm thiểu việc bỏ khách thông qua cơ chế chia sẻ khách hàng.
 
 ## 🎯 Tính năng chính
 
@@ -161,4 +161,4 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ---
 
-**XeGhep** - Chia sẻ khách hàng, tối ưu hiệu suất! 🚗💨
+**Xe Ghép** - Chia sẻ khách hàng, tối ưu hiệu suất! 🚗💨

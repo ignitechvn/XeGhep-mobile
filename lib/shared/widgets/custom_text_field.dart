@@ -61,6 +61,9 @@ class CustomTextField extends StatelessWidget {
           focusNode: focusNode,
           decoration: InputDecoration(
             hintText: hint,
+            hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              color: Theme.of(context).hintColor,
+            ),
             prefixIcon: prefixIcon != null ? Icon(prefixIcon) : null,
             suffixIcon: suffixIcon,
             counterText: maxLength != null ? null : '',
